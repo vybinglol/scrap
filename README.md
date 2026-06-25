@@ -66,12 +66,13 @@ npm run start    # serve the production build
 
 ## Routes
 
-- **`/`** — the web app (the vibe-driven to-do + notes tool).
-- **`/landing`** — the marketing page. One Vercel deploy serves both. Its hero has
-  a live **vibe switcher** that re-skins the whole page using the same CSS-variable
-  + preset mechanism as the app (`components/landing/`, demo palettes in
-  `lib/landingVibes.ts`). Edit all marketing constants — name, Ko-fi URL, and the
-  **`DOWNLOAD_URL`** placeholder — in **`lib/site.ts`**.
+- **`/`** — the marketing landing page (the front door). One Vercel deploy serves
+  both. Its hero has a live **vibe switcher** that re-skins the whole page using the
+  same CSS-variable + preset mechanism as the app (`components/landing/`, demo
+  palettes in `lib/landingVibes.ts`). Edit all marketing constants — name, Ko-fi
+  URL, and the **`DOWNLOAD_URL`** placeholder — in **`lib/site.ts`**.
+- **`/app`** — the web app itself (the vibe-driven to-do + notes tool). The old
+  `/landing` URL redirects to `/`.
 
 ## Mac build (Tauri) — for the landing's download button
 

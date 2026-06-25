@@ -10,7 +10,7 @@ type Props = { onAdd: (pin: Pin) => void };
 
 const EXAMPLES = [
   "https://www.pinterest.com/pin/989947561831324728/",
-  "https://www.pinterest.com/junnygarza/bruh/",
+  "https://www.pinterest.com/pin/82753711897956729/",
 ];
 
 export function AddInspiration({ onAdd }: Props) {

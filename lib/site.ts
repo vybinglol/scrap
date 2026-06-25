@@ -5,8 +5,8 @@ export const site = {
   name: "Scrapable",
   tagline: "Your to-do list, but make it yours.",
 
-  // The browser web app (this same repo, served at "/").
-  webAppPath: "/",
+  // The browser web app (this same repo, served at "/app").
+  webAppPath: "/app",
 
   // Ko-fi (handle stays "vybinglol").
   kofiUser: "vybinglol",
