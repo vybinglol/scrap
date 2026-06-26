@@ -99,10 +99,20 @@ npm run tauri build    # static-export + compile → .app and .dmg
 - **Auto-update** is wired from v0.1; the private updater key is gitignored and
   belongs in a CI secret (`TAURI_SIGNING_PRIVATE_KEY`).
 
-### Wiring the landing's download button
-Build/publish a `.dmg` to **GitHub Releases**, then paste its URL into
-`DOWNLOAD_URL` in `lib/site.ts` (update `version` / `fileSize` too). Phase 2 automates
-this with `tauri-action` on a `v*` tag.
+### Cutting a release (automated)
+Releasing is **push a tag**. `.github/workflows/release.yml` (GitHub Actions +
+`tauri-action`) builds, ad-hoc signs, generates the updater `latest.json`, and
+publishes the `.dmg` + updater artifacts to a GitHub Release on any `v*` tag:
+
+```bash
+# bump the version in package.json + src-tauri/tauri.conf.json first, then:
+git tag v0.2.0 && git push origin v0.2.0
+```
+
+The landing's download button uses a stable `…/releases/latest/download/Scrapable-AppleSilicon.dmg`
+URL, so it never needs editing — the workflow re-uploads that fixed asset name each
+release. Requires one repo secret, **`TAURI_SIGNING_PRIVATE_KEY`** (the updater private
+key; the key has no password so the workflow passes an empty password inline).
 
 ## Deploy to Vercel (zero config)
 

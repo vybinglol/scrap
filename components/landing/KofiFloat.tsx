@@ -19,8 +19,10 @@ export function KofiFloat() {
         };
         w.kofiWidgetOverlay?.draw(site.kofiUser, {
           type: "floating-chat",
-          "floating-chat.donateButton.text": "Support Scrapable",
-          "floating-chat.donateButton.background-color": "#7c4dff",
+          // Keep this short — Ko-fi's floating button has a fixed width and
+          // longer text ("Support Scrapable") clips.
+          "floating-chat.donateButton.text": "Support me",
+          "floating-chat.donateButton.background-color": "#323842",
           "floating-chat.donateButton.text-color": "#ffffff",
         });
       }}

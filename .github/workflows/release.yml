@@ -1,0 +1,69 @@
+name: Release Mac app
+
+# Releasing is "push a tag": `npm version` (or bump versions) → `git tag v0.2.0`
+# → `git push --tags`. This builds, ad-hoc signs, generates the updater
+# latest.json, and publishes everything to a GitHub Release.
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: macos-latest # Apple Silicon runner
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Builds the static export (beforeBuildCommand) + the Tauri app, ad-hoc
+      # signs it, signs the updater artifacts with the private key, generates
+      # latest.json, and creates/updates the GitHub Release with all assets.
+      - name: Build & publish release
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          # The updater key was generated without a password.
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ""
+        with:
+          tagName: ${{ github.ref_name }}
+          releaseName: "Scrapable ${{ github.ref_name }}"
+          releaseDraft: false
+          prerelease: false
+          releaseBody: |
+            ### Download
+            **[Scrapable-AppleSilicon.dmg](https://github.com/vybinglol/scrap/releases/latest/download/Scrapable-AppleSilicon.dmg)** · Apple Silicon (M1–M4) · macOS 12 Monterey or later
+
+            ### First time opening it
+            Free, open-source, not yet notarized — macOS will ask you to confirm it's safe (normal):
+            1. Drag **Scrapable** into Applications.
+            2. **Right-click → Open → Open.**
+
+            Power user? `xattr -cr /Applications/Scrapable.app`. Or use it in any browser: https://scrapable.vercel.app/app
+
+      # The landing page links a stable, version-less asset name. tauri-action
+      # uploads the versioned dmg (Scrapable_x.y.z_aarch64.dmg), so add a copy
+      # under the fixed name the landing's "latest/download" URL expects.
+      - name: Add stable-named .dmg asset
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          DMG=$(ls src-tauri/target/release/bundle/dmg/*.dmg | head -1)
+          cp "$DMG" "Scrapable-AppleSilicon.dmg"
+          gh release upload "${{ github.ref_name }}" "Scrapable-AppleSilicon.dmg" --clobber
