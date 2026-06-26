@@ -8,6 +8,7 @@ import {
   Inter,
 } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 // One font per role across the four mood presets. The active preset maps
@@ -53,8 +54,9 @@ export default function RootLayout({
     <html lang="en" data-preset="cozy" className={`${fontVars} h-full antialiased`}>
       <body className="min-h-full">
         {children}
-        {/* Vercel Web Analytics (web only; no-ops in the Tauri desktop build). */}
+        {/* Vercel Web Analytics + Speed Insights (web only; no-op in Tauri). */}
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
