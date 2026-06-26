@@ -7,6 +7,7 @@ import {
   Playfair_Display,
   Inter,
 } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 // One font per role across the four mood presets. The active preset maps
@@ -39,6 +40,7 @@ const fontVars = [
 ].join(" ");
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://scrapable.app"),
   title: "Scrapable — your pins become the interface",
   description:
     "A to-do + notes app whose entire look is generated from your Pinterest inspiration.",
@@ -49,7 +51,11 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" data-preset="cozy" className={`${fontVars} h-full antialiased`}>
-      <body className="min-h-full">{children}</body>
+      <body className="min-h-full">
+        {children}
+        {/* Vercel Web Analytics (web only; no-ops in the Tauri desktop build). */}
+        <Analytics />
+      </body>
     </html>
   );
 }
