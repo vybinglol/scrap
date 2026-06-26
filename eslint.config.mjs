@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Tauri (Rust + build artifacts) and the desktop-export stash.
+    "src-tauri/**",
+    ".desktop-excluded/**",
   ]),
 ]);
 

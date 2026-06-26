@@ -74,20 +74,35 @@ npm run start    # serve the production build
 - **`/app`** — the web app itself (the vibe-driven to-do + notes tool). The old
   `/landing` URL redirects to `/`.
 
-## Mac build (Tauri) — for the landing's download button
+## Mac app (Tauri 2)
 
-The landing's "Download free for Mac" points at `site.DOWNLOAD_URL` (a placeholder
-until you publish a build):
+The same React UI ships as a tiny native macOS app via **Tauri 2** (OS-native
+WebView — no bundled Chromium). Full rationale, the static-export + Rust-command
+architecture, the signing tiers, and the roadmap are in **`MAC_APP_PLAN.md`**.
 
-1. Wrap this Next.js frontend with **Tauri** and build a universal binary:
-   `cargo tauri build --target universal-apple-darwin` → produces a `.dmg` in
-   `src-tauri/target/release/bundle/`.
-2. Upload that `.dmg` as a **GitHub Releases** asset and paste its URL into
-   `DOWNLOAD_URL` in `lib/site.ts` (also update `version` / `fileSize`).
-3. Unless you join the Apple Developer Program ($99/yr) and **notarize**, macOS
-   shows an "unidentified developer" warning. The landing's Download section already
-   carries the right-click → Open instructions — **remove that block once notarized**
-   (it's flagged with a comment in `components/landing/DownloadSection.tsx`).
+**Prerequisites:** Rust (`rustup`), Node 18+, Xcode Command Line Tools
+(`xcode-select --install`).
+
+```bash
+npm run tauri dev      # run the desktop app against the Next dev server
+npm run tauri build    # static-export + compile → .app and .dmg
+```
+
+- Artifacts land in `src-tauri/target/release/bundle/` (`dmg/` and `macos/`).
+  Phase-1 Apple-Silicon `.dmg` is **~3.7 MB**.
+- The desktop window opens straight to the workspace (`/app`); the vibe engine runs
+  through the Rust `extract_vibe` command instead of `/api/vibe` (see
+  `lib/vibe-source.ts`). The Vercel web build is unchanged.
+- **First open (ad-hoc signed, not notarized):** right-click → **Open** → **Open**,
+  or `xattr -cr /Applications/Scrapable.app`. Notarization (clean double-click) is the
+  paid Tier-1 step documented in `MAC_APP_PLAN.md`.
+- **Auto-update** is wired from v0.1; the private updater key is gitignored and
+  belongs in a CI secret (`TAURI_SIGNING_PRIVATE_KEY`).
+
+### Wiring the landing's download button
+Build/publish a `.dmg` to **GitHub Releases**, then paste its URL into
+`DOWNLOAD_URL` in `lib/site.ts` (update `version` / `fileSize` too). Phase 2 automates
+this with `tauri-action` on a `v*` tag.
 
 ## Deploy to Vercel (zero config)
 

@@ -1,5 +1,11 @@
 import { Workspace } from "@/components/Workspace";
+import { DesktopUpdater } from "@/components/DesktopUpdater";
 
 export default function AppPage() {
-  return <Workspace />;
+  return (
+    <>
+      <DesktopUpdater />
+      <Workspace />
+    </>
+  );
 }

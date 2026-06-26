@@ -36,6 +36,17 @@ yarn-error.log*
 # vercel
 .vercel
 
+# next static export (desktop build output) + build script stash
+/out
+/.desktop-excluded
+
+# tauri
+/src-tauri/target
+/src-tauri/gen/schemas
+# updater signing private key — NEVER commit (lives in a CI secret)
+*.key
+tauri-updater.key*
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

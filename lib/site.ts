@@ -12,19 +12,17 @@ export const site = {
   kofiUser: "vybinglol",
   kofiUrl: "https://ko-fi.com/vybinglol",
 
-  // Mac download. Replace with the real GitHub Releases .dmg asset URL.
-  // TODO(jorge): paste the published universal .dmg URL here.
-  downloadUrl: "#download", // PLACEHOLDER — see README "Mac build"
-  githubUrl: "https://github.com/vybinglol/scrapable",
+  // Mac download — stable "latest release" asset URL, so this never needs
+  // updating per release (the GitHub Release just has to keep this asset name).
+  downloadUrl:
+    "https://github.com/vybinglol/scrap/releases/latest/download/Scrapable-AppleSilicon.dmg",
+  githubUrl: "https://github.com/vybinglol/scrap",
 
   // Shown near the download button. Update to match the published build.
   version: "0.1.0",
-  fileSize: "8.4 MB",
+  fileSize: "3.7 MB",
   macMin: "macOS 12 Monterey or later",
-  arch: "Universal — Apple Silicon & Intel",
+  arch: "Apple Silicon (M1–M4) — Intel build coming soon",
 
   author: "Jorge · Ignite & Elevate Marketing",
 } as const;
-
-// True once the .dmg URL is filled in (controls whether the CTA is live).
-export const hasRealDownload = site.downloadUrl !== "#download";

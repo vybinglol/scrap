@@ -5,7 +5,8 @@
 // pulled from its image, turning them into a cached palette via lib/vibe.
 
 import type { Mood, Palette, PinKind } from "./types";
-import { paletteFromColors, type ColorCount } from "./vibe";
+import { paletteFromColors } from "./vibe";
+import { getVibeRaw } from "./vibe-source";
 
 const PIN_HOSTS = new Set([
   "pinterest.com",
@@ -70,18 +71,13 @@ export type PinVibe = {
   mood?: Mood;
 };
 
-// Ask the server for the dominant colors of a URL's image, then turn them into
-// a role-assigned palette + mood. Best-effort: returns {} on any failure so the
+// Get the dominant colors of a URL's image (via the web Route Handler or the
+// desktop Rust command — see lib/vibe-source.ts), then turn them into a
+// role-assigned palette + mood. Best-effort: returns {} on any failure so the
 // pin still saves (it just won't contribute to the theme).
 export async function fetchPinVibe(url: string): Promise<PinVibe> {
   try {
-    const res = await fetch(`/api/vibe?url=${encodeURIComponent(url)}`);
-    if (!res.ok) return {};
-    const data = (await res.json()) as {
-      imageUrl: string | null;
-      title: string | null;
-      colors: ColorCount[];
-    };
+    const data = await getVibeRaw(url);
     const out: PinVibe = {
       imageUrl: data.imageUrl ?? undefined,
       title: data.title ?? undefined,

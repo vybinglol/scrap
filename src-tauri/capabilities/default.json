@@ -1,0 +1,7 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Core, updater, and process permissions for the main window. New native capabilities (tray, notifications, shortcuts, deep links) are added here additively.",
+  "windows": ["main"],
+  "permissions": ["core:default", "updater:default", "process:default"]
+}
