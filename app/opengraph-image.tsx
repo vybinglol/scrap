@@ -37,26 +37,39 @@ export default function OgImage() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              color: "#fff",
-              fontSize: 44,
             }}
           >
-            ✦
+            {/* SVG sparkle — drawn, not a font glyph (next/og can't fetch a font
+                for ✦ and the whole image fails). */}
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="#fffdf6">
+              <path d="M12 4c.6 3.4 2.6 5.4 6 6-3.4.6-5.4 2.6-6 6-.6-3.4-2.6-5.4-6-6 3.4-.6 5.4-2.6 6-6Z" />
+            </svg>
           </div>
           <div style={{ fontSize: 56, fontWeight: 700 }}>Scrapable</div>
         </div>
 
+        {/* Each line is a single text node — satori requires display:flex on any
+            div with more than one child, so we avoid mixing text + span. */}
         <div
           style={{
             fontSize: 76,
             fontWeight: 800,
             lineHeight: 1.05,
             marginTop: 40,
-            maxWidth: 900,
+            maxWidth: 980,
           }}
         >
-          Your to-do list, but make it{" "}
-          <span style={{ color: "#7c9a5e" }}>yours.</span>
+          Your to-do list, but make it
+        </div>
+        <div
+          style={{
+            fontSize: 76,
+            fontWeight: 800,
+            lineHeight: 1.05,
+            color: "#7c9a5e",
+          }}
+        >
+          yours.
         </div>
 
         <div
@@ -67,7 +80,7 @@ export default function OgImage() {
             maxWidth: 880,
           }}
         >
-          Pin your Pinterest vibe → the whole app becomes it. Free for Mac.
+          Pin your Pinterest vibe and the whole app becomes it. Free for Mac.
         </div>
       </div>
     ),

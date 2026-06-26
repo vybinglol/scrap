@@ -41,7 +41,10 @@ const fontVars = [
 ].join(" ");
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://scrapable.app"),
+  // Absolute base for OG/canonical URLs. Pointed at the always-reachable Vercel
+  // domain for now so link previews work while scrapable.app DNS propagates;
+  // switch to https://scrapable.app once that domain resolves.
+  metadataBase: new URL("https://scrapable.vercel.app"),
   title: "Scrapable — your pins become the interface",
   description:
     "A to-do + notes app whose entire look is generated from your Pinterest inspiration.",
