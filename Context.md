@@ -18,7 +18,7 @@ Tone/brand: warm, scrapbook/sticker, hand-drawn, anti-corporate (Gen-Z, `vybingl
 ## Where everything lives
 
 - **GitHub:** `https://github.com/vybinglol/scrap` — **PUBLIC**. Production branch = `master`.
-- **Web (Vercel):** `https://scrapable.vercel.app` — auto-deploys `master`, **zero env vars**.
+- **Web (Vercel):** `https://scrapable.app` — auto-deploys `master`, **zero env vars**.
   - `/` = marketing landing · `/app` = the web app · `/landing` → 301 to `/`.
 - **Mac download (GitHub Releases):** latest = **v0.1.1**. Stable URL the landing uses:
   `https://github.com/vybinglol/scrap/releases/latest/download/Scrapable-AppleSilicon.dmg`
@@ -119,7 +119,11 @@ npm run tauri build    # desktop .app + .dmg → src-tauri/target/release/bundle
   no password → workflow passes an empty password inline). **⚠️ If this key is lost, you can
   never sign updates for already-installed builds.** Public key is in `tauri.conf.json`.
 - No `.env`, no API keys, no tokens anywhere in the repo (it's intentionally keyless).
-- Commit author email `junnygarza09@gmail.com` is public on the repo (cosmetic only).
+- Future commits use the GitHub **noreply** email (`git config user.email` is set per-repo);
+  pre-existing commits still carry the personal email (cosmetic; not rewritten).
+- **Vercel telemetry:** `@vercel/analytics` + `@vercel/speed-insights` mounted in
+  `app/layout.tsx` (web only; no-op in Tauri). Custom domain **scrapable.app** is live
+  (apex on Vercel); `scrapable.vercel.app` still resolves as a fallback.
 
 ## Gotchas worth remembering
 

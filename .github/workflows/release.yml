@@ -55,7 +55,7 @@ jobs:
             1. Drag **Scrapable** into Applications.
             2. **Right-click → Open → Open.**
 
-            Power user? `xattr -cr /Applications/Scrapable.app`. Or use it in any browser: https://scrapable.vercel.app/app
+            Power user? `xattr -cr /Applications/Scrapable.app`. Or use it in any browser: https://scrapable.app/app
 
       # The landing page links a stable, version-less asset name. tauri-action
       # uploads the versioned dmg (Scrapable_x.y.z_aarch64.dmg), so add a copy
