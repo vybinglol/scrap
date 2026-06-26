@@ -19,7 +19,7 @@ export const site = {
   githubUrl: "https://github.com/vybinglol/scrap",
 
   // Shown near the download button. Update to match the published build.
-  version: "0.1.0",
+  version: "0.1.1",
   fileSize: "3.7 MB",
   macMin: "macOS 12 Monterey or later",
   arch: "Apple Silicon (M1–M4) — Intel build coming soon",

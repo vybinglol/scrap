@@ -1,6 +1,6 @@
 [package]
 name = "scrapable"
-version = "0.1.0"
+version = "0.1.1"
 description = "Scrapable — a to-do + notes app that becomes your aesthetic"
 authors = ["Jorge"]
 edition = "2021"
